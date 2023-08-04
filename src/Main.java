@@ -465,10 +465,82 @@ la opción 0 para salir del mismo.
 // ******************************************************
 
 /*
-13. Crear el algoritmo necesario para poder gestionar el ingreso a un boliche. El mismo deberá contar con un pequeño menú con
-    las siguientes opciones:
-    ● Ingreso de datos.
-    ● Capacidad disponible.
-    ● Dinero recaudado.
-    ● Salir del sistema.
+13. Crear el algoritmo necesario para poder gestionar el ingreso a un boliche.
  */
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);// Objeto Scanner para leer los datos ingresados.
+        int capacidadMaxima = 500; // Capacidad máxima del boliche.
+        int capacidadActual = 0; // Capacidad inicial (personas dentro del boliche)
+        int dineroRecaudado = 0; // Dinero total recaudado
+
+        // Muestra el menú en consola
+        System.out.println("Menú principal:");
+        System.out.println("1) Ingreso de datos");
+        System.out.println("2) Capacidad disponible");
+        System.out.println("3) Dinero recaudado");
+        System.out.println("4) Salir");
+        System.out.println("Seleccione una opción: ");
+
+        int opcion = scanner.nextInt(); // Lee la opción ingresada por el usuario.
+
+        // Condicionales para las opciones del menú
+
+        if (opcion == 1) {
+            System.out.println("Nombre: ");
+            scanner.nextLine();
+            String nombre = scanner.nextLine();
+            System.out.println("Edad: ");
+            int edad = scanner.nextInt();
+            System.out.println("DNI: ");
+            int dni = scanner.nextInt();
+            System.out.println("Tipo de pase (Normal / VIP / Descuento): ");
+            scanner.nextLine();
+            String tipoPase = scanner.nextLine();
+
+            if (edad >= 21) {
+                // Si es mayor de 21 y con pase VIP
+                if (tipoPase.equalsIgnoreCase("VIP")) { // equalsIgnoreCase compara la cadena de texto contra un objeto ignorando mayúsculas y minúsculas.
+                    System.out.println("Adelante, " + nombre);
+                    capacidadActual++; // Incrementa la capacidad actual
+                } else if (tipoPase.equalsIgnoreCase("Descuento")) {
+                    System.out.print("La entrada normal con descuento vale $750 o la vip con descuento vale $1000, cuál comprás? ");
+                    String tipoEntrada = scanner.nextLine();
+                    if (tipoEntrada.equalsIgnoreCase("normal")) {
+                        dineroRecaudado += 750;
+                    } else if (tipoEntrada.equalsIgnoreCase("vip")) {
+                        dineroRecaudado += 1000;
+                    }
+                    capacidadActual++;
+                    System.out.println("Adelante, " + nombre);
+            } else {
+                    System.out.print("¿La entrada normal vale $1500 o la vip vale $2000, cuál comprás? ");
+                    String tipoEntrada = scanner.nextLine();
+                    if (tipoEntrada.equalsIgnoreCase("normal")) {
+                        dineroRecaudado += 1500;
+                    } else if (tipoEntrada.equalsIgnoreCase("vip")) {
+                        dineroRecaudado += 2000;
+                    }
+                    capacidadActual++;
+                    System.out.println("Adelante, " + nombre);
+                }
+            }else {
+                    System.out.println("Ingreso solo para mayores de 21 años.");
+                }
+
+            } else if (opcion == 2) {
+                int capacidadDisponible = capacidadMaxima - capacidadActual;
+                System.out.println("Capacidad disponible: " + capacidadDisponible);
+            } else if (opcion == 3) {
+                System.out.println("Dinero recaudado: " + dineroRecaudado);
+            } else if (opcion == 4) {
+                System.out.println("Saliendo del sistema...");
+                scanner.close();
+                System.exit(0);
+            } else {
+                System.out.println("Opción inválida. Por favor, seleccione una opción válida.");
+            }
+    }
+}
